@@ -1,0 +1,97 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Carpeta donde Decap subirá imágenes que Willy cargue desde el panel
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# Idioma del panel
+locale: "es"
+
+# Forzar HTTPS (Netlify lo provee gratis)
+site_url: https://show-services.netlify.app
+display_url: https://show-services.netlify.app
+logo_url: /favicon.svg
+
+collections:
+  # ===== INFORMACIÓN GENERAL DEL SITIO =====
+  - name: "ajustes"
+    label: "⚙️ Información general"
+    files:
+      - file: "src/content/site/general.json"
+        label: "Datos de Willy"
+        name: "general"
+        format: "json"
+        fields:
+          - { label: "Nombre artístico", name: "nombre", widget: "string", default: "Wil" }
+          - { label: "Lema corto (sale en el hero)", name: "tagline", widget: "string", default: "Show sano y divertido" }
+          - { label: "Descripción larga", name: "descripcion", widget: "text" }
+          - { label: "Número de WhatsApp (con código de país, sin +)", name: "whatsapp", widget: "string", hint: "Ejemplo: 50212345678" }
+          - { label: "Mensaje pre-llenado de WhatsApp", name: "mensajeWhatsapp", widget: "string", default: "Hola Willy, vi tu página y quiero cotizar un show" }
+          - { label: "Instagram (URL completa)", name: "instagram", widget: "string", required: false }
+          - { label: "TikTok (URL completa)", name: "tiktok", widget: "string", required: false }
+          - { label: "Facebook (URL completa)", name: "facebook", widget: "string", required: false }
+          - { label: "Imagen principal (hero)", name: "heroImage", widget: "image", required: false }
+
+  # ===== SERVICIOS =====
+  - name: "servicios"
+    label: "🎪 Servicios"
+    label_singular: "Servicio"
+    folder: "src/content/servicios"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    format: "json"
+    extension: "json"
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - { label: "Descripción", name: "descripcion", widget: "text" }
+      - { label: "Emoji (ícono)", name: "icono", widget: "string", default: "🎈", hint: "Pegá un emoji: 🎂 🎪 🎈 🏫 🏢" }
+      - { label: "Orden (menor = primero)", name: "orden", widget: "number", default: 1, value_type: "int" }
+
+  # ===== GALERÍA DE EVENTOS =====
+  - name: "eventos"
+    label: "📸 Galería de eventos"
+    label_singular: "Evento"
+    folder: "src/content/eventos"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    format: "json"
+    extension: "json"
+    fields:
+      - { label: "Título del evento", name: "titulo", widget: "string" }
+      - { label: "Foto", name: "imagen", widget: "image" }
+      - { label: "Descripción corta", name: "descripcion", widget: "string", required: false }
+      - { label: "Fecha", name: "fecha", widget: "datetime", required: false, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+
+  # ===== TESTIMONIOS =====
+  - name: "testimonios"
+    label: "💬 Testimonios"
+    label_singular: "Testimonio"
+    folder: "src/content/testimonios"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    format: "json"
+    extension: "json"
+    fields:
+      - { label: "Nombre del cliente", name: "nombre", widget: "string" }
+      - { label: "Texto del testimonio", name: "texto", widget: "text" }
+      - { label: "Tipo de evento", name: "evento", widget: "string", required: false, hint: "Ej: Cumpleaños de Sofía, Kermesse del Colegio X" }
+
+  # ===== PREGUNTAS FRECUENTES =====
+  - name: "faq"
+    label: "❓ Preguntas frecuentes"
+    label_singular: "Pregunta"
+    folder: "src/content/faq"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    format: "json"
+    extension: "json"
+    fields:
+      - { label: "Pregunta", name: "pregunta", widget: "string" }
+      - { label: "Respuesta", name: "respuesta", widget: "text" }
+      - { label: "Orden", name: "orden", widget: "number", default: 1, value_type: "int" }

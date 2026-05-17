@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Wil</title>
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body>
+    <!-- Netlify Identity widget: para que Willy haga login -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Decap CMS (el sucesor de Netlify CMS) -->
+    <script src="https://unpkg.com/decap-cms@^3.1.0/dist/decap-cms.js"></script>
+    <script>
+      // Redirige al admin después de confirmar invitación
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

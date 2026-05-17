@@ -1,0 +1,219 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  whatsapp?: string;
+}
+
+const { title, description = "Show sano y divertido para cumpleaños, kermesses y eventos corporativos en Guatemala.", whatsapp } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#E63946" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="es_GT" />
+
+    <!-- Google Fonts: Bagel Fat One (display) + Manrope (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Schema.org: LocalBusiness para SEO local en Guatemala -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Wil",
+      "description": description,
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "GT",
+        "addressLocality": "Guatemala"
+      },
+      "telephone": whatsapp ? `+${whatsapp}` : undefined,
+      "priceRange": "$$",
+      "image": "https://show-services.netlify.app/og.jpg"
+    })} />
+
+    <title>{title}</title>
+
+    <!-- Netlify Identity widget para que el login del CMS funcione -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body>
+    <slot />
+
+    <style is:global>
+      :root {
+        --rojo: #E63946;
+        --rojo-oscuro: #C1121F;
+        --amarillo: #FFD23F;
+        --azul: #1D8FE1;
+        --crema: #FFF6E0;
+        --crema-2: #FCEFC7;
+        --tinta: #1A1A2E;
+        --tinta-2: #2D3142;
+
+        --display: "Bagel Fat One", system-ui, serif;
+        --body: "Manrope", system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        font-family: var(--body);
+        background: var(--crema);
+        color: var(--tinta);
+        line-height: 1.55;
+        font-size: 17px;
+        overflow-x: hidden;
+
+        /* Textura sutil de grano */
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(255, 210, 63, 0.12), transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(29, 143, 225, 0.08), transparent 40%);
+      }
+
+      /* Ruido sutil global */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.04;
+        z-index: 1;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      h1, h2, h3 {
+        font-family: var(--display);
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        line-height: 1;
+      }
+
+      h2 {
+        font-size: clamp(2.4rem, 6vw, 4.5rem);
+        margin-bottom: 0.5em;
+      }
+
+      h3 {
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* Contenedor */
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Botón WhatsApp principal */
+      .btn-wa {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: var(--rojo);
+        color: white;
+        font-family: var(--display);
+        font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+        padding: 1rem 1.8rem;
+        border-radius: 999px;
+        border: 3px solid var(--tinta);
+        box-shadow: 6px 6px 0 var(--tinta);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        cursor: pointer;
+      }
+      .btn-wa:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 10px 10px 0 var(--tinta);
+      }
+      .btn-wa:active {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 var(--tinta);
+      }
+
+      /* WhatsApp flotante (mobile) */
+      .wa-float {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.2rem;
+        width: 60px;
+        height: 60px;
+        background: #25D366;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        z-index: 100;
+        border: 3px solid white;
+        transition: transform 0.2s ease;
+      }
+      .wa-float:hover {
+        transform: scale(1.08);
+      }
+      .wa-float svg {
+        width: 32px;
+        height: 32px;
+        fill: white;
+      }
+
+      /* Animación entrada */
+      @keyframes pop-in {
+        from { opacity: 0; transform: translateY(20px) scale(0.96); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .pop-in {
+        animation: pop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      }
+
+      @keyframes wiggle {
+        0%, 100% { transform: rotate(-2deg); }
+        50% { transform: rotate(2deg); }
+      }
+
+      /* Reduce motion */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </body>
+</html>
